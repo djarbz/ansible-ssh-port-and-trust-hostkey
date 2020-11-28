@@ -1,0 +1,2 @@
+skip_facts: false
+known_hosts: "~/.ssh/known_hosts"
