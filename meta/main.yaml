@@ -2,7 +2,8 @@
 galaxy_info:
   role_name: ssh-port-and-trust-hostkey
   author: Austin Arbour
-  description: Ansible role to detect the ssh port of a host and add the hostkeys to be trusted. Since it is a local script, should work with all hosts that run SSH.
+  description: |
+    Ansible role to detect the ssh port of a host and add the hostkeys to be trusted. Since it is a local script, should work with all hosts that run SSH.
 
   license: APACHE 2.0
   min_ansible_version: 2.5
@@ -14,7 +15,7 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - all
-  - name: Centos
+  - name: EL
     versions:
     - all
   - name: Alpine

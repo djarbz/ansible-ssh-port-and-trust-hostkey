@@ -4,22 +4,23 @@
     ssh_host: "{{ ansible_host|default(inventory_hostname) }}"
 
 - name: scan and register
-  local_action: 
-    module: shell 
+  shell:
     cmd: "ssh-keyscan -p {{ ssh_port }} {{ ssh_host }}{% if ssh_host | ipaddr is sameas false %},`dig +short {{ ssh_host }}`{% endif %}"
   register: "host_keys"
+  delegate_to: "localhost"
   changed_when: false
 
-- assert:
+- name: Did we did get a SSH Key for {{ ssh_host }}
+  assert:
     that: host_keys.stdout
     msg:  "We did not get SSH key for {{ ssh_host }}"
 
 - name: Verify host entry exists
-  local_action:
-    module: blockinfile
+  blockinfile:
     backup: yes
     marker: "# {mark} SSH Keys for {{ ssh_host }}"
     create: yes
     path: "{{ known_hosts }}"
     block: "{{ host_keys.stdout }}"
+  delegate_to: "localhost"
   become: no
